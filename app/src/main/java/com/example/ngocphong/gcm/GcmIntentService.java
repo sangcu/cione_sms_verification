@@ -28,7 +28,7 @@ public class GcmIntentService extends IntentService {
     private static final Context SMS_DELIVERED = null;
     NotificationCompat.Builder builder;
     private NotificationManager mNotificationManager;
-    public   static String content = "Welcome Cione Your code is : ";
+    public   static String content = "[WWW.CIONE.VN] Your code is: ";
     public GcmIntentService() {
         super("GcmIntentService");
     }
