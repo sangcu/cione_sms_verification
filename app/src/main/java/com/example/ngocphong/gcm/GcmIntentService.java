@@ -73,7 +73,9 @@ public class GcmIntentService extends IntentService {
                 // sendNotification("Received: " + extras.toString());
                 // sent message to user
 
-                UserToken usertoken = jsontoObject(extras.toString());
+                UserToken usertoken = new UserToken();
+                usertoken.code=extras.getString("code");
+                usertoken.phone=extras.getString("phone");
                 sendSms(usertoken.phone, content + usertoken.code, false);
                 Log.i(TAG, "Received: " + extras.toString());
             }

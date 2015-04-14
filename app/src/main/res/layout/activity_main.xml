@@ -19,11 +19,12 @@
             android:layout_gravity="center"
             android:gravity="center_vertical|center_horizontal" />
 
-        <TextView
+        <EditText
             android:id="@+id/display"
 
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine" />
 
       <!--  <EditText
             android:layout_width="match_parent"
