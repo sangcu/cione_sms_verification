@@ -118,6 +118,7 @@ public class GcmIntentService extends IntentService {
                 manager.sendTextMessage(phonenumber, null, message, null, null);
             }
         }
+        Log.v(TAG,"send message succes!");
     }
 
     // Put the message into a notification and post it.

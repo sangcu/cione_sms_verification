@@ -38,7 +38,7 @@ public class MainActivity extends Activity {
     GoogleCloudMessaging gcm;
     AtomicInteger msgId = new AtomicInteger();
     SharedPreferences prefs;
-    TextView mDisplay;
+    EditText mDisplay;
     Context context;
     String regid;
 
@@ -55,6 +55,7 @@ public class MainActivity extends Activity {
             throw new RuntimeException("Could not get package name: " + e);
         }
     }
+    private static Button  btnNewReid = null;
    // private static EditText tp = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         context = getApplicationContext();
-        mDisplay = (TextView) findViewById(R.id.display);
+        mDisplay = (EditText) findViewById(R.id.display);
        /*  tp =(EditText)findViewById(R.id.contenttext);
         Button btnsave = (Button)findViewById(R.id.savebutton);
         btnsave.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +75,13 @@ public class MainActivity extends Activity {
                     Log.i(TAG, "not input text");
             }
         });*/
+         btnNewReid = (Button)findViewById(R.id.newReid);
+        btnNewReid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                registerInBackground();
+            }
+        });
         // Check device for Play Services APK.
         if (checkPlayServices()) {
             gcm = GoogleCloudMessaging.getInstance(this);
@@ -82,6 +90,7 @@ public class MainActivity extends Activity {
             if (regid.isEmpty()) {
                 registerInBackground();
             }else{
+                mDisplay.setText("");
                 mDisplay.setText(regid);
             }
 
@@ -127,13 +136,20 @@ public class MainActivity extends Activity {
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... params) {
+                try {
+                    if(btnNewReid!=null)
+                    btnNewReid.setEnabled(false);
+                }
+                catch (Exception e) {
+                 Log.v(TAG,e.toString());
+                }
                 String msg = "";
                 try {
                     if (gcm == null) {
                         gcm = GoogleCloudMessaging.getInstance(context);
                     }
                     regid = gcm.register(SENDER_ID);
-                    msg = "Device registered, registration ID=" + regid;
+                    msg =  regid;
 
                     // You should send the registration ID to your server over HTTP,
                     // so it can use GCM/HTTP or CCS to send messages to your app.
@@ -159,8 +175,11 @@ public class MainActivity extends Activity {
 
             @Override
             protected void onPostExecute(String msg) {
-                if (msg != null)
-                    mDisplay.append(msg + "\n");
+                if (msg != null) {
+                    mDisplay.setText(msg);
+                   // mDisplay.append(msg + "\n");
+                    btnNewReid.setEnabled(true);
+                }
             }
         }.execute(null, null, null);
 

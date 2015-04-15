@@ -25,7 +25,11 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine" />
-
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Registration New ReID"
+            android:id="@+id/newReid" />
       <!--  <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
